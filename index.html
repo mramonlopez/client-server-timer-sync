@@ -1,0 +1,30 @@
+<html>
+<head>
+	<script src='js/channel.js'></script>
+	<script src='js/client.js'></script>
+	<script src='js/server.js'></script>
+	<script>
+		var SERVER_STEP = 10000;
+		
+		var main = function() {
+			var realTimer = document.getElementById('REAL'),
+				serverTimer = document.getElementById('SERVER'),
+				fakeTimer = document.getElementById('FAKE');
+
+			var client = new Client(realTimer, serverTimer, fakeTimer, SERVER_STEP);
+			var channel = new Channel();
+			var server = new Server(channel, SERVER_STEP);
+
+			channel.listen(client.onNewMessage, client);
+			server.init();
+
+			client.init();
+		}
+	</script>
+</head>
+<body onload="main()">
+<h1 id="REAL">REAL TIME:</h1>
+<h1 id="SERVER">SERVER TIME:</h1>
+<h1 id="FAKE">FAKE TIME:</H1>
+</body>
+</html>
