@@ -1,3 +1,5 @@
+var TIMER_PERIOD = 100;
+
 var Client = function(realTimerElement, serverTimerElement, fakeTimerElement, serverTimeStep) {
 	this.realTimerElement = realTimerElement;
 	this.serverTimerElement = serverTimerElement;
@@ -18,12 +20,12 @@ Client.prototype.formatTime = function(time) {
 
 Client.prototype.gameLoop = function() {
 	if (this.realTimer > 0) {
-		(this.realTimer -= 1000);
+		(this.realTimer -= TIMER_PERIOD);
 		this.realTimerElement.innerHTML = 'REAL TIME: ' + this.formatTime(this.realTimer);
 	}
 
 	if (this.serverTimer > 0) {
-		(this.serverTimer -= 1000);
+		(this.serverTimer -= TIMER_PERIOD);
 		this.serverTimerElement.innerHTML = 'SERVER TIME: ' + this.formatTime(this.serverTimer);
 	}
 
@@ -44,7 +46,7 @@ Client.prototype.onNewMessage = function(time) {
 		this.fakeTimer = time;
 	}
 
-	this.fakeSecond = 1000 + (this.fakeTimer - this.serverTimer) / (this.serverTimeStep / 1000);
+	this.fakeSecond = TIMER_PERIOD + (this.fakeTimer - this.serverTimer) / (this.serverTimeStep / TIMER_PERIOD);
 	console.log('FAKE SECOND:', this.fakeSecond);
 };
 
@@ -55,5 +57,5 @@ Client.prototype.init = function() {
 		return function() {
 			self.gameLoop();
 		}
-	})(this), 1000);
+	})(this), TIMER_PERIOD);
 }

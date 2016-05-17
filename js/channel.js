@@ -9,7 +9,7 @@ Channel.prototype.listen = function(callback, context) {
 };
 
 Channel.prototype.sendMessage = function(message) {
-	var delay = Math.floor(Math.random() * 3000) + 1000;
+	var delay = Math.floor(Math.random() * 4000) + 1000;
 
 	console.log('DELAY', delay);
 
